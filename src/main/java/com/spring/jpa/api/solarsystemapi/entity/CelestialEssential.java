@@ -18,10 +18,10 @@ public class CelestialEssential {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private int celestialNumber; //천체 번호
+    private int celNumber; //천체 번호
 
     @Column(unique = true, nullable = false)
-    private String celestialName; //천체의 이름(태양, 달 등)
+    private String celName; //천체의 이름(태양, 달 등)
 
     @Column(nullable = false)
     private boolean earthLike; //지구형 행성(수금지화), 목성형 행성(목토천해)

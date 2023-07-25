@@ -22,8 +22,10 @@ public class ProductDetail {
     @Column(name = "product_name")
     private String productName;
 
+    @Column(name = "product_content")
     private String productContent; // 물품 설명
 
+    @Column(name = "product_price")
     private int price; //물품 가격
 
     // 생성자 추가
