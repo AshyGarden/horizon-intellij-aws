@@ -36,5 +36,8 @@ public class CelestialEssential {
     private double mass; //행성 질량
 
     @Column(nullable = false)
+    private double revolution; //행성 공전 주기
+
+    @Column(nullable = false)
     private double rotation; //행성 자전 주기
 }
