@@ -4,24 +4,16 @@ import com.spring.jpa.api.userapi.dto.UserSignUpResponseDTO;
 import com.spring.jpa.api.userapi.dto.request.LoginRequestDTO;
 import com.spring.jpa.api.userapi.dto.request.UserRequestSignUpDTO;
 import com.spring.jpa.api.userapi.dto.response.LoginResponseDTO;
-import com.spring.jpa.api.userapi.entity.Role;
 import com.spring.jpa.api.userapi.entity.User;
 import com.spring.jpa.api.userapi.repository.UserRepository;
 import com.spring.jpa.auth.TokenProvider;
 import com.spring.jpa.auth.TokenUserInfo;
-import com.spring.jpa.aws.S3Service;
 import com.spring.jpa.utils.exception.DuplicatedEmailException;
 import com.spring.jpa.utils.exception.NoRegisteredArgumentsException;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
-import org.springframework.web.multipart.MultipartFile;
-
-import java.io.File;
-import java.io.IOException;
-import java.util.UUID;
 
 @Service
 @Slf4j
@@ -31,15 +23,13 @@ public class UserService {
     private final UserRepository userRepository;
     private final PasswordEncoder encoder;
     private final TokenProvider tokenProvider;
-    private final S3Service s3Service;
 
 //    @Value("${upload.path}")
 //    private String uploadRootPath;
 
     //회원 가입 처리
     public UserSignUpResponseDTO create(
-            final UserRequestSignUpDTO dto,
-            final String uploadedFilePath
+            final UserRequestSignUpDTO dto
     )
             throws RuntimeException {
 
@@ -58,7 +48,7 @@ public class UserService {
         dto.setPassword(encoded);
 
         //유저 엔터티로 변환
-        User user = dto.toEntity(uploadedFilePath);
+        User user = dto.toEntity();
 
         User saved = userRepository.save(user);
 
@@ -97,65 +87,4 @@ public class UserService {
         return new LoginResponseDTO(user, token);
     }
 
-
-    //프리미엄으로 등급 업
-    public LoginResponseDTO promoteToPremium(TokenUserInfo userInfo)
-            throws NoRegisteredArgumentsException, IllegalStateException
-    {
-
-        User foundUser = userRepository
-                .findById(userInfo.getUserId())
-                .orElseThrow(
-                        () -> new NoRegisteredArgumentsException("회원 조회에 실패!")
-                );
-
-        // 일반 회원이 아니면 예외
-        if (userInfo.getRole() != Role.COMMON) {
-            throw new IllegalStateException("일반 회원이 아니면 등급을 상승시킬 수 없습니다.");
-        }
-
-        //등급 변경
-        foundUser.changeRole(Role.PREMIUM);
-        User saved = userRepository.save(foundUser);
-
-        // 토큰을 재발급
-        String token = tokenProvider.createToken(saved);
-
-        return new LoginResponseDTO(saved, token);
-    }
-
-    /**
-     * 업로드된 파일을 서버에 저장하고 저장 경로를 리턴
-     * @param originalFile - 업로드 된 파일의 정보
-     * @return 실제로 저장된 이미지 경로
-     */
-
-    public String uploadProfileImage(MultipartFile originalFile) throws IOException {
-
-        //루트 디렉토리가 존재하는 지 확인 후 존재하지 않으면 생성
-//        File rootDir = new File(uploadRootPath);
-//        if (!rootDir.exists()) rootDir.mkdir();
-
-        // 파일명을 유니크하게 변경
-        String uniqueFileName = UUID.randomUUID()
-                + "_" + originalFile.getOriginalFilename();
-
-        // 파일을 저장
-//        File uploadFile = new File(uploadRootPath + "/" + uniqueFileName);
-//        originalFile.transferTo(uploadFile);
-
-        // 파일을 S3 버킷에 저장
-        String uploadUrl
-                = s3Service.uploadToS3Bucket(originalFile.getBytes(), uniqueFileName);
-
-        return uploadUrl;
-    }
-
-
-    public String findProfilePath(String userId) {
-        User user = userRepository.findById(userId)
-                .orElseThrow();
-//        return uploadRootPath + "/" + user.getProfileImg();
-        return user.getProfileImg();
-    }
 }

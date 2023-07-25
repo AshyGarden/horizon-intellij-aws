@@ -1,5 +1,5 @@
 package com.spring.jpa.auth;
-import com.spring.jpa.api.userapi.entity.Role;
+
 import com.spring.jpa.api.userapi.entity.User;
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;
@@ -8,7 +8,6 @@ import io.jsonwebtoken.security.Keys;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
-import org.springframework.stereotype.Service;
 
 import java.time.Instant;
 import java.time.temporal.ChronoUnit;
@@ -55,7 +54,6 @@ public class TokenProvider {
         //추가 클레임 정의
         Map<String, Object> claims = new HashMap<>();
         claims.put("email", userEntity.getEmail());
-        claims.put("role", userEntity.getRole().toString());
 
 
         return Jwts.builder()
@@ -69,7 +67,7 @@ public class TokenProvider {
                 .setIssuer("딸기겅듀") // iss: 발급자 정보
                 .setIssuedAt(new Date()) //iat: 발급시간
                 .setExpiration(expiry) //exp: 만료 시간
-                .setSubject(userEntity.getId()) //sub: 토큰을 식별할 수 있는 주요 데이터
+                .setSubject(userEntity.getEmail()) //sub: 토큰을 식별할 수 있는 주요 데이터
                 .compact();
     }
 
@@ -94,9 +92,8 @@ public class TokenProvider {
         log.info("claims: {}", claims);
 
         return TokenUserInfo.builder()
-                .userId(claims.getSubject())
+                .userName(claims.getSubject())
                 .email(claims.get("email", String.class))
-                .role(Role.valueOf(claims.get("role", String.class)))
                 .build();
     }
 

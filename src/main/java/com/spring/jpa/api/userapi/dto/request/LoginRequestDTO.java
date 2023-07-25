@@ -11,14 +11,13 @@ import javax.validation.constraints.NotBlank;
 @EqualsAndHashCode
 @NoArgsConstructor
 @AllArgsConstructor
-
 public class LoginRequestDTO {
-    @Email
+
+
     @NotBlank
     private String email;
 
     @NotBlank
     private String password;
-
 
 }
