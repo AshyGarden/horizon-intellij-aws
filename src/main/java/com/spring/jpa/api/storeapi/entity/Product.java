@@ -21,7 +21,7 @@ public class Product {
     private String productName; // 물품 이름
 
     @Column(name = "product_count")
-    private int productCount; // 물품 개수
+    private int count; // 물품 개수
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "user_email")
