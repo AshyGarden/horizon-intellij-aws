@@ -1,9 +1,6 @@
 package com.spring.jpa.api.storeapi.service;
 
-import com.spring.jpa.api.storeapi.dto.request.BasketRequestDTO;
-import com.spring.jpa.api.storeapi.dto.request.ProductHistoryRequestDTO;
-import com.spring.jpa.api.storeapi.dto.request.ProductRequestDTO;
-import com.spring.jpa.api.storeapi.dto.request.ProductDetailRequestDTO;
+import com.spring.jpa.api.storeapi.dto.request.*;
 import com.spring.jpa.api.storeapi.dto.response.*;
 import com.spring.jpa.api.storeapi.entity.Basket;
 import com.spring.jpa.api.storeapi.entity.Product;
@@ -23,6 +20,7 @@ import org.springframework.validation.annotation.Validated;
 
 import java.util.List;
 import java.util.NoSuchElementException;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 @Service
@@ -35,7 +33,9 @@ public class StoreService {
     private final ProductRepository productRepository;
     private final ProductDetailRepository productsRepository;
     private final ProductHistoryRepository productHistoryRepository;
+    private final ProductDetailRepository productDetailRepository;
 
+    //장바구니 생성
     public void createBasket( @Validated UserRequestSignUpDTO dto) {
         String email = dto.getEmail();
         String name = dto.getUserName();
@@ -96,17 +96,26 @@ public class StoreService {
         return retrieve(userEmail);
     }
 
-    public ProductsListResponseDTO create(
-            final ProductRequestDTO requestDTO,
-            final TokenUserInfo userInfo
-    )
-            throws RuntimeException, IllegalStateException {
-
+    public ProductsListResponseDTO create(ProductRequestDTO requestDTO, TokenUserInfo userInfo) {
         Basket foundUser = getBasket(userInfo.getEmail());
 
-        Product product = requestDTO.toEntity(foundUser);
+        String productName = requestDTO.getName().getName();
 
-        productRepository.save(product);
+        // "물품2"라는 이름의 ProductDetail 엔티티를 데이터베이스에서 찾아옴
+        ProductDetail productDetail = productDetailRepository.findByName(productName);
+
+        // 만약 "물품2"라는 이름의 ProductDetail 엔티티가 존재하지 않는다면 예외 처리 또는 새로운 엔티티를 생성해야 함
+
+        // 새로운 Product 엔티티 생성 및 설정
+        Product newProduct = new Product();
+        newProduct.setName(productDetail); // 찾은 ProductDetail 엔티티를 설정
+        newProduct.setCount(requestDTO.getCount());
+        newProduct.setEmail(foundUser);
+
+        // 생성한 Product 엔티티를 저장
+        productRepository.save(newProduct);
+
+        // 수정된 장바구니 정보를 가져와서 반환
         return retrieve(userInfo.getEmail());
     }
 
@@ -133,4 +142,24 @@ public class StoreService {
         return new ProductDetailResponseDTO(saved);
     }
 
+    // 장바구니에서 물품 개수 변경
+    public ProductsListResponseDTO update(final ProductModifyRequestDTO requestDTO, String email) throws RuntimeException {
+
+        Optional<Product> targetEntity
+                = productRepository.findById(requestDTO.getId());
+
+        targetEntity.ifPresent(entity -> {
+            entity.setCount(requestDTO.getCount());
+
+            productRepository.save(entity);
+        });
+
+        return retrieve(email);
+
+    }
+
+    public List<ProductDetail> getList() {
+        return productDetailRepository.findList();
+
+    }
 }
