@@ -18,26 +18,39 @@ public class CelestialEssential {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "celestial_number")
     private int celNumber; //천체 번호
 
-    @Column(unique = true, nullable = false)
-    private String celName; //천체의 이름(태양, 달 등)
+    @Column(name = "celestial_name_kor", unique = true, nullable = false)
+    private String celNameKor; //천체의 이름 - 국문(태양, 달 등)
 
-    @Column(nullable = false)
-    private boolean earthLike; //지구형 행성(수금지화), 목성형 행성(목토천해)
+    @Column(name = "celestial_name_eng", unique = true, nullable = false)
+    private String celNameEng; //천체의 이름 - 영문
 
-    @Column(nullable = false)
+    @Column(name = "celestial_diameter", nullable = false)
     private double diameter; //행성 평균 지름(Km)
 
-    @Column(nullable = false)
+    @Column(name = "celestial_surface", nullable = false)
     private double surface; //행성 표면적(km^2)
 
-    @Column(nullable = false)
+    @Column(name = "celestial_mass", nullable = false)
     private double mass; //행성 질량
 
-    @Column(nullable = false)
-    private double revolution; //행성 공전 주기
-
-    @Column(nullable = false)
+    @Column(name = "celestial_rotation", nullable = false)
     private double rotation; //행성 자전 주기
+
+    @Column(name = "celestial_comment")
+    private String comment; //천체 설명
+
+    public CelestialEssential toEntity(){
+        return CelestialEssential.builder()
+                .celNumber(this.celNumber)
+                .celNameKor(this.celNameKor)
+                .celNameEng(this.celNameEng)
+                .diameter(this.diameter)
+                .surface(this.surface)
+                .mass(this.mass)
+                .rotation(this.rotation)
+                .comment(this.comment).build();
+    }
 }

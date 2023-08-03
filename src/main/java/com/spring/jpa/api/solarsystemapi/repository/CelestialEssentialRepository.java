@@ -11,11 +11,8 @@ public interface CelestialEssentialRepository
         extends JpaRepository<CelestialEssential, String> {
 
     // 특정 천체의 정보를 가져오는 기능
-    // SELECT * FROM tbl_todo WHERE user_id = ?
-//    @Query("SELECT ce FROM CelestialEssential ce WHERE ce.celestialNumber = :celestialNumber")
-//    List<CelestialEssential>
-//        findAllByName(@Param("celestialNumber") CelestialEssential ce);
-
-
+    //SELECT * FROM tbl_todo WHERE user_id = ?
+//    @Query("SELECT ce FROM celestial_essential ce WHERE ce.celestial_number = :celestialNumber")
+//    List<CelestialEssential> findByCelNum(@Param("celestialNumber") int celestialNumber);
 
 }
