@@ -48,7 +48,7 @@ public class UserController {
     //POST: /api/auth
     @PostMapping
     public ResponseEntity<?> signup(
-            @Validated UserRequestSignUpDTO dto,
+            @RequestBody UserRequestSignUpDTO dto,
             BindingResult result
     ) {
         log.info("/api/auth POST - {}", dto);
