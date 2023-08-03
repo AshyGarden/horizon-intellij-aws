@@ -96,6 +96,11 @@ public class StoreService {
         return retrieve(userEmail);
     }
 
+    public ProductHistoryListResponseDTO historyDelete(final Long historyId, String userEmail) {
+        productHistoryRepository.deleteById(historyId);
+        return historyRetrieve(userEmail);
+    }
+
     public ProductsListResponseDTO create(ProductRequestDTO requestDTO, TokenUserInfo userInfo) {
         Basket foundUser = getBasket(userInfo.getEmail());
 

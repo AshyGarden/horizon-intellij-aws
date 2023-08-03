@@ -10,8 +10,8 @@ import org.springframework.data.jpa.repository.Query;
 import java.util.List;
 
 @SpringBootApplication
-public interface ProductHistoryRepository extends JpaRepository<ProductHistory, String> {
+public interface ProductHistoryRepository extends JpaRepository<ProductHistory, Long> {
 
-    @Query("SELECT p FROM ProductHistory p WHERE p.email = :email")
+    @Query("SELECT p FROM ProductHistory p WHERE p.email = :email ORDER BY p.id DESC")
     List<ProductHistory> findProducts(Basket email);
 }
