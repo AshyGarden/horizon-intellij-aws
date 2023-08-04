@@ -110,6 +110,17 @@ public class StoreController {
         return ResponseEntity.ok().body(responseDTO);
     }
 
+    //결재 취소
+    @DeleteMapping("/history/{id}")
+    public ResponseEntity<?> deleteHistoryProduct(
+            @AuthenticationPrincipal TokenUserInfo userInfo,
+            @PathVariable("id") Long historyId
+    ) {
+
+        ProductHistoryListResponseDTO responseDTO = storeService.historyDelete(historyId, userInfo.getEmail());
+        return ResponseEntity.ok().body(responseDTO);
+    }
+
     //회원 장바구니 내용검색
     @GetMapping("/products")
     public ResponseEntity<?> getProducts(
