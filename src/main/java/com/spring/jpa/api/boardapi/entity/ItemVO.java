@@ -7,7 +7,7 @@ import lombok.Setter;
 @Setter
 public class ItemVO {
 
-    private String astroEvent, astroTime, locdate;
+    private String astroEvent, astroTitle, astroTime, locdate;
 
 
 

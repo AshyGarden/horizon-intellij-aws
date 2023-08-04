@@ -46,8 +46,7 @@ public class CelestialRepositoryTest {
                 .celNumber(1).celNameKor("태양").celNameEng("Sun")
                 .diameter(1392000).mass(1988550000).surface(609000)
                 .rotation(27.6).comment(
-                        "태양은 태양계의 중심 항성이다."
-                ).build();
+                        "").build();
 
         CelestialOptional sunO = CelestialOptional.builder()
                 .celNumber(1).build();
@@ -57,7 +56,7 @@ public class CelestialRepositoryTest {
                 .celNumber(10).celNameKor("수성").celNameEng("Mercury")
                 .diameter(4879.6).mass(3023).surface(75)
                 .rotation(58.6).comment(
-                        "수성은 1번째 행성이다."
+                      ""
                 ).build();
         CelestialOptional mercuryO = CelestialOptional.builder()
                 .celNumber(10).revolution(87.9).earthLike(true).orbitRadius(0.39)

@@ -73,10 +73,10 @@ dependencies {
 
 }
 
-tasks.named('test') {
-//	useJUnitPlatform()
-	exclude '**/*' // 빌드 시 전체 테스트 생략
-}
+//tasks.named('test') {
+////	useJUnitPlatform()
+//	exclude '**/*' // 빌드 시 전체 테스트 생략
+//}
 
 //querydsl 추가 시작
 //queryDsl은 내부적으로 Entity클래스를 인식해서 그와 비슷한 모양의 QClass를 제작함
