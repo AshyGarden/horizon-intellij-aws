@@ -16,8 +16,8 @@ import java.util.List;
 @Slf4j
 @RequiredArgsConstructor
 @RequestMapping("/solar")
-//@CrossOrigin
-@CrossOrigin(origins = "http://localhost:3000")
+@CrossOrigin
+//@CrossOrigin(origins = "http://localhost:3000")
 public class SolarSystemController {
 
     private final CelestialService celestialService;

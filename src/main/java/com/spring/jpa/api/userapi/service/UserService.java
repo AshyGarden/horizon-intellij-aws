@@ -7,6 +7,7 @@ import com.spring.jpa.api.userapi.dto.response.LoginResponseDTO;
 import com.spring.jpa.api.userapi.entity.User;
 import com.spring.jpa.api.userapi.repository.UserRepository;
 import com.spring.jpa.auth.TokenProvider;
+import com.spring.jpa.utils.S3Service;
 import com.spring.jpa.utils.exception.DuplicatedEmailException;
 import com.spring.jpa.utils.exception.NoRegisteredArgumentsException;
 import lombok.RequiredArgsConstructor;
@@ -24,6 +25,7 @@ public class UserService {
     private final UserRepository userRepository;
     private final PasswordEncoder encoder;
     private final TokenProvider tokenProvider;
+    private final S3Service s3Service;
 
 //    @Value("${upload.path}")
 //    private String uploadRootPath;

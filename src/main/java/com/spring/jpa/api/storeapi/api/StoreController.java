@@ -26,8 +26,8 @@ import java.util.List;
 @Slf4j
 @RequiredArgsConstructor
 @RequestMapping("/shop")
-//@CrossOrigin
-@CrossOrigin(origins = "http://localhost:3000")
+@CrossOrigin
+//@CrossOrigin(origins = "http://localhost:3000")
 public class StoreController {
 
     private final StoreService storeService;
