@@ -34,6 +34,7 @@ public class User {
     @Column(nullable = false)
     private String address1;
 
+    @NotNull
     @Column(nullable = false)
     private String address2;
 

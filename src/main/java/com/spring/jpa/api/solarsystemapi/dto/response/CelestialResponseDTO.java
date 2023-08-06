@@ -1,5 +1,5 @@
 package com.spring.jpa.api.solarsystemapi.dto.response;
 
-public class CelestialOptionalResponseDTO {
+public class CelestialResponseDTO {
 
 }

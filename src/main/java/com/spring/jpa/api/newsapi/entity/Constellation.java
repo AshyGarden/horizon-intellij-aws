@@ -1,6 +1,12 @@
 package com.spring.jpa.api.newsapi.entity;
 
+import com.spring.jpa.api.newsapi.service.ConstellationService;
+import com.spring.jpa.api.solarsystemapi.entity.CelestialOptional;
+import com.spring.jpa.api.solarsystemapi.service.CelestialService;
 import lombok.*;
+import lombok.extern.slf4j.Slf4j;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.*;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -38,7 +44,7 @@ public class Constellation {
     @Column(name = "article_img2")
     private String img2; //이미지 경로2
 
-    @Column(name = "article_comment", length = 3000)
+    @Column(name = "article_comment")
     private String comment; //설명
 
 }

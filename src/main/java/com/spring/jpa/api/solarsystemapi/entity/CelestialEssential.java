@@ -12,12 +12,12 @@ import javax.persistence.*;
 public class CelestialEssential {
 
     //태양, 달을 포함하는 천체 entity
-    //태양 - 
-    //달 - 
+    //태양 -
+    //달 -
     //이외의 행성 not null
 
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    //@GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "celestial_number")
     private int celNumber; //천체 번호
 
@@ -39,18 +39,7 @@ public class CelestialEssential {
     @Column(name = "celestial_rotation", nullable = false)
     private double rotation; //행성 자전 주기
 
-    @Column(name = "celestial_comment")
+    @Column(name = "celestial_comment", length = 3000)
     private String comment; //천체 설명
 
-    public CelestialEssential toEntity(){
-        return CelestialEssential.builder()
-                .celNumber(this.celNumber)
-                .celNameKor(this.celNameKor)
-                .celNameEng(this.celNameEng)
-                .diameter(this.diameter)
-                .surface(this.surface)
-                .mass(this.mass)
-                .rotation(this.rotation)
-                .comment(this.comment).build();
-    }
 }
