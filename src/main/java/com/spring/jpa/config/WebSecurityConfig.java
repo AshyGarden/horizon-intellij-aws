@@ -46,6 +46,7 @@ public class WebSecurityConfig {
                 .antMatchers("/", "/api/auth/**").permitAll()
                 .antMatchers("/", "/shop/list").permitAll()
                 .antMatchers("/", "/solar/**").permitAll()
+                .antMatchers("/", "/news/**").permitAll()
                 .antMatchers(HttpMethod.POST, "/shop/product").permitAll()
                 .anyRequest().authenticated();
 

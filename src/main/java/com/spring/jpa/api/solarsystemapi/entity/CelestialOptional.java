@@ -17,9 +17,6 @@ public class CelestialOptional {
     @Column(name = "celestial_number")
     private int celNumber; //천체 번호
 
-    @Column(name = "celestial_name_eng")
-    private String celNameEng;
-
     @Column(name = "celestial_earthLike")
     private boolean earthLike; //지구형 행성(수금지화), 목성형 행성(목토천해)
 
@@ -38,15 +35,15 @@ public class CelestialOptional {
     @Column(name = "celestial_sat2")
     private String satellite2; //대표 위성2
 
-//    public CelestialOptional toEntity() {
-//        return CelestialOptional.builder()
-//                .celNumber(this.celNumber)
-//                .earthLike(this.earthLike)
-//                .revolution(this.revolution)
-//                .orbitRadius(this.orbitRadius)
-//                .satellites(this.satellites)
-//                .satellite1(this.satellite1)
-//                .satellite2(this.satellite2).build();
-//
-//    }
+    public CelestialOptional toEntity() {
+        return CelestialOptional.builder()
+                .celNumber(this.celNumber)
+                .earthLike(this.earthLike)
+                .revolution(this.revolution)
+                .orbitRadius(this.orbitRadius)
+                .satellites(this.satellites)
+                .satellite1(this.satellite1)
+                .satellite2(this.satellite2).build();
+
+    }
 }
