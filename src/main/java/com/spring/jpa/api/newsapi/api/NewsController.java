@@ -16,7 +16,7 @@ import java.util.List;
 @CrossOrigin
 public class NewsController {
 
-    final ConstellationService constellationService;
+    private final ConstellationService constellationService;
 
     @GetMapping("/{yearMonth}")
     public ResponseEntity<?> getOptional(
