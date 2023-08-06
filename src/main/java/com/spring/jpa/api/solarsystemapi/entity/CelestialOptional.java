@@ -13,9 +13,12 @@ import javax.persistence.*;
 public class CelestialOptional {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+   // @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "celestial_number")
     private int celNumber; //천체 번호
+
+    @Column(name = "celestial_name_eng")
+    private String celNameEng; //천체의 이름 - 영문
 
     @Column(name = "celestial_earthLike")
     private boolean earthLike; //지구형 행성(수금지화), 목성형 행성(목토천해)
